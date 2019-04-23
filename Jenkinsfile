@@ -9,13 +9,13 @@ pipeline {
       parallel {
         stage('Express Image') {
           steps {
-            sh 'docker build -f express-image/Dockerfile \
+            sh 'sudo docker build -t express-image/Dockerfile \
             -t nodeapp-dev:trunk .'
           }
         }
         stage('Test-Unit Image') {
           steps {
-            sh 'docker build -f test-image/Dockerfile \
+            sh 'sudo docker build -t test-image/Dockerfile \
             -t test-image:latest .'
           }
         }
@@ -66,9 +66,9 @@ pipeline {
             steps {
                     retry(3) {
                         timeout(time:10, unit: 'MINUTES') {
-                            sh 'docker tag nodeapp-dev:trunk datcaotien>/nodeapp-prod:latest'
-                            sh 'docker push datcaotien/nodeapp-prod:latest'
-                            sh 'docker save datcaotien/nodeapp-prod:latest | gzip > nodeapp-prod-golden.tar.gz'
+                            sh 'sudo docker tag nodeapp-dev:trunk datcaotien>/nodeapp-prod:latest'
+                            sh 'sudo docker push datcaotien/nodeapp-prod:latest'
+                            sh 'sudo docker save datcaotien/nodeapp-prod:latest | gzip > nodeapp-prod-golden.tar.gz'
                         }
                     }
 
