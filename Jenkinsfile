@@ -9,11 +9,13 @@ pipeline {
       parallel {
         stage('Express Image') {
           steps {
+            sh 'sudo usermod -aG docker jenkins'   		
             sh 'docker build -f express-image/Dockerfile -t nodeapp-dev:trunk .'
           }
         }
         stage('Test-Unit Image') {
           steps {
+            sh 'sudo usermod -aG docker jenkins'
             sh 'docker build -f test-image/Dockerfile -t test-image:latest .'
           }
         }
